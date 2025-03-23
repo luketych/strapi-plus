@@ -1,0 +1,24 @@
+{
+  "name": "Viscera Strapi Dev Container",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "strapi",
+  "workspaceFolder": "/app",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "mikestead.dotenv",
+        "editorconfig.editorconfig",
+        "christian-kohler.npm-intellisense"
+      ],
+      "settings": {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+      }
+    }
+  },
+  "forwardPorts": [1337, 5432],
+  "postCreateCommand": "npm install",
+  "remoteUser": "node"
+}

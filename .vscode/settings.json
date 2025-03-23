@@ -1,0 +1,20 @@
+{
+    "files.exclude": {
+      "**/.git": true,
+      "**/.svn": true,
+      "**/.hg": true,
+      "**/.DS_Store": true,
+      "**/Thumbs.db": true,
+      "**/.trunk/*actions/": true,
+      "**/.trunk/*logs/": true,
+      "**/.trunk/*notifications/": true,
+      "**/.trunk/*out/": true,
+      "**/.trunk/*plugins/": true,
+      "**/CVS": true
+    },
+    "hide-files.files": [],
+    "terminal.integrated.env.osx": {
+        "NVM_DIR": "/Users/luketych/.nvm",
+        "NODE_VERSION": "22"
+    }
+}

@@ -1,0 +1,9 @@
+{
+  "version": "v1",
+  "packages": {
+    "strapi-plugin-shortio": {
+      "signature": "88ac46399f25c38449fe4cbd251b4b32",
+      "file": true
+    }
+  }
+}
