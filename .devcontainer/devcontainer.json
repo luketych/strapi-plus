@@ -19,6 +19,6 @@
     }
   },
   "forwardPorts": [1337, 5432],
-  "postCreateCommand": "npm install",
+  "postCreateCommand": "chown -R node:node /app && npm install",
   "remoteUser": "node"
 }
