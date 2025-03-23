@@ -19,6 +19,6 @@
     }
   },
   "forwardPorts": [1337, 5432],
-  "postCreateCommand": "chown -R node:node /app && npm install",
+  "postCreateCommand": "find /app -path /app/.git -prune -o -exec chown node:node {} \\; && npm install",
   "remoteUser": "node"
 }

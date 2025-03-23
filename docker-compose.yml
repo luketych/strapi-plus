@@ -1,5 +1,3 @@
-version: '3'
-
 services:
   strapi:
     container_name: viscera
@@ -22,8 +20,11 @@ services:
     ports:
       - "1337:1337"
     volumes:
-      - ./:/app
-      - /app/node_modules
+      - type: bind
+        source: .
+        target: /app
+      - type: volume
+        target: /app/node_modules
     depends_on:
       - db
 
