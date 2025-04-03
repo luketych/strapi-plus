@@ -8,7 +8,7 @@
  */
 
 // Import the createShortLink function from the shortio_script.js file
-const { createShortLink } = require('../../../scripts/shortio_script');
+const { createShortLink } = require('./createShortLink.js');
 
 module.exports = (plugin) => {
   console.log('🔌 Initializing custom upload plugin extension');

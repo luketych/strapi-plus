@@ -11,10 +11,9 @@ console.log('📦 Using link shortening service:', KUTT_URL);
 async function createShortLink(originalURL) {
   try {
     const response = await axios.post(
-      KUTT_X_API_KEY,
+      `${KUTT_URL}/api/v2/links`,
       {
-        originalURL,
-        domain: KUTT_X_API_KEY,
+        target: originalURL,
       },
       {
         headers: {
