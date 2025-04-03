@@ -21,10 +21,10 @@
     "@strapi/strapi": "5.11.3",
     "axios": "^1.8.4",
     "better-sqlite3": "^11.3.0",
+    "pg": "^8.14.1",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-router-dom": "^6.0.0",
-    "strapi-plugin-shortio": "file:.yalc/strapi-plugin-shortio",
     "styled-components": "^6.0.0"
   },
   "engines": {

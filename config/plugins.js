@@ -34,8 +34,8 @@ module.exports = ({ env }) => {
     },
 
     // ✅ Register your plugin here
-    'strapi-plugin-shortio': {
-      enabled: true,
-    },
+    // 'strapi-plugin-shortio': {
+    //   enabled: true,
+    // },
   };
 };

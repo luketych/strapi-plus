@@ -1,0 +1,38 @@
+FROM node:20
+
+# Install dependencies required for node-gyp
+RUN apt-get update && \
+    apt-get install -y python3 make g++ && \
+    rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+COPY package*.json ./
+COPY .nvmrc ./
+
+
+# ENV YARN_NODE_ARCH=arm64
+# ENV YARN_NODE_PLATFORM=linux
+
+# RUN yarn install
+
+# BEFORE installing your packages
+ENV npm_config_arch=arm64 \
+    npm_config_platform=linux \
+    npm_config_target_platform=linux
+
+RUN echo "arch=$npm_config_arch platform=$npm_config_platform target=$npm_config_target_platform"
+
+# Install dependencies
+RUN npm install
+RUN npm install pg
+
+# Copy source
+COPY . .
+
+# Build admin UI
+RUN npm run build
+
+EXPOSE 1337
+
+CMD ["npm", "run", "develop"]

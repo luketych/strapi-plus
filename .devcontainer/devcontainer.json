@@ -1,5 +1,5 @@
 {
-  "name": "Viscera Strapi Dev Container",
+  "name": "Strapi Dev Container",
   "dockerComposeFile": "docker-compose.yml",
   "service": "strapi",
   "workspaceFolder": "/app",

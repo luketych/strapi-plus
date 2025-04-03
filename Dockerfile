@@ -1,22 +1,19 @@
-FROM node:20-alpine
+FROM node:18-alpine3.18
+# Installing libvips-dev for sharp Compatibility
+RUN apk update && apk add --no-cache build-base gcc autoconf automake zlib-dev libpng-dev nasm bash vips-dev git
+ARG NODE_ENV=development
+ENV NODE_ENV=${NODE_ENV}
 
-# Install dependencies required for node-gyp
-RUN apk add --no-cache python3 make g++ 
+WORKDIR /opt/
+COPY package.json package-lock.json ./
+RUN npm install -g node-gyp
+RUN npm config set fetch-retry-maxtimeout 600000 -g && npm install
+ENV PATH /opt/node_modules/.bin:$PATH
 
-WORKDIR /app
-
-COPY package*.json ./
-COPY .nvmrc ./
-
-# Install dependencies
-RUN npm ci
-
-# Copy source
+WORKDIR /opt/app
 COPY . .
-
-# Build admin UI
-RUN npm run build
-
+RUN chown -R node:node /opt/app
+USER node
+RUN ["npm", "run", "build"]
 EXPOSE 1337
-
 CMD ["npm", "run", "develop"]

@@ -2,34 +2,29 @@
 
 require('dotenv/config');
 const axios = require('axios');
-const path = require('path');
 
-const SHORT_IO_API_KEY = process.env.SHORTIO_API_KEY;
-const SHORT_IO_DOMAIN = process.env.SHORTIO_DOMAIN;
+const KUTT_URL = process.env.KUTT_URL;
+const KUTT_X_API_KEY = process.env.KUTT_X_API_KEY;
 
-console.log('📦 Short.io domain from env:', SHORT_IO_DOMAIN);
+console.log('📦 Using link shortening service:', KUTT_URL);
 
 async function createShortLink(originalURL) {
   try {
-    console.log('CDN_BASE_URL:', process.env.CDN_BASE_URL);
-    console.log('fileUrl:', originalURL);
-    console.log('🔗 Full URL to shorten:', originalURL);
-    
     const response = await axios.post(
-      'https://api.short.io/links',
+      KUTT_X_API_KEY,
       {
         originalURL,
-        domain: SHORT_IO_DOMAIN,
+        domain: KUTT_X_API_KEY,
       },
       {
         headers: {
-          authorization: SHORT_IO_API_KEY,
+          'X-API-KEY': KUTT_X_API_KEY,
           'Content-Type': 'application/json',
         },
       }
     );
 
-    console.log('Short link created:', response.data.shortURL);
+    console.log('Short link created:', originalURL, response.data.shortURL);
     return response.data;
   } catch (err) {
     console.error('❌ Error creating short link:', err.response?.data || err.message);
