@@ -5,24 +5,31 @@ services:
       service: strapi
     # Override command to ensure container stays running
     command: sleep infinity
+    env_file: ../.env
     environment:
       # Additional dev-specific environment variables can be added here
       NODE_ENV: development
     volumes:
       - type: bind
         source: ..
-        target: /app
+        target: /opt/app
       - type: volume
-        target: /app/node_modules
+        target: /opt/app/node_modules
       - type: volume
-        target: /app/.cache
+        target: /opt/app/.cache
       - type: volume
-        target: /app/build
+        target: /opt/app/build
 
-  db:
+  strapiDB:
     extends:
       file: ../docker-compose.yml
-      service: db
+      service: strapiDB
+    env_file: ../.env
 
 volumes:
-  pgdata:
+  strapi-data:
+
+
+networks:
+  strapi_net:
+    external: true
