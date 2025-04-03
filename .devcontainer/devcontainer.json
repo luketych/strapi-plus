@@ -2,7 +2,22 @@
   "name": "Strapi Dev Container",
   "dockerComposeFile": "docker-compose.yml",
   "service": "strapi",
-  "workspaceFolder": "/app",
+  "workspaceFolder": "/opt/app",
+  "containerEnv": {
+    "COMPOSE_BAKE": "false"
+  },
+  "remoteEnv": {
+    "DATABASE_CLIENT": "${localEnv:DATABASE_CLIENT}",
+    "DATABASE_HOST": "strapiDB",
+    "DATABASE_PORT": "${localEnv:DATABASE_PORT}",
+    "DATABASE_NAME": "${localEnv:DATABASE_NAME}",
+    "DATABASE_USERNAME": "${localEnv:DATABASE_USERNAME}",
+    "DATABASE_PASSWORD": "${localEnv:DATABASE_PASSWORD}",
+    "JWT_SECRET": "${localEnv:JWT_SECRET}",
+    "ADMIN_JWT_SECRET": "${localEnv:ADMIN_JWT_SECRET}",
+    "APP_KEYS": "${localEnv:APP_KEYS}",
+    "NODE_ENV": "development"
+  },
   "customizations": {
     "vscode": {
       "extensions": [
@@ -19,6 +34,6 @@
     }
   },
   "forwardPorts": [1337, 5432],
-  "postCreateCommand": "find /app -path /app/.git -prune -o -path /app/.cache -prune -o -path /app/node_modules -prune -o -path /app/build -prune -o -exec chown node:node {} \\; && npm install",
+  "postCreateCommand": "find /opt/app -path /opt/app/.git -prune -o -path /opt/app/.cache -prune -o -path /opt/app/node_modules -prune -o -path /opt/app/build -prune -o -exec chown node:node {} \\; && npm install",
   "remoteUser": "node"
 }

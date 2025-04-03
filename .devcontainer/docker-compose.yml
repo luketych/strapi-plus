@@ -3,12 +3,11 @@ services:
     extends:
       file: ../docker-compose.yml
       service: strapi
-    # Override command to ensure container stays running
+    container_name: strapi_devcontainer
     command: sleep infinity
-    env_file: ../.env
-    environment:
-      # Additional dev-specific environment variables can be added here
-      NODE_ENV: development
+    env_file:
+      - ../.env
+      - .env.devcontaine
     volumes:
       - type: bind
         source: ..
@@ -24,12 +23,22 @@ services:
     extends:
       file: ../docker-compose.yml
       service: strapiDB
+    container_name: strapiDB_devcontainer
     env_file: ../.env
+    environment:
+      POSTGRES_USER: ${DATABASE_USERNAME:-strapi}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD:-strapi}
+      POSTGRES_DB: ${DATABASE_NAME:-strapi}
+    ports:
+      - "5433:5432"
 
 volumes:
   strapi-data:
 
-
 networks:
   strapi_net:
     external: true
+
+# networks:
+#   strapi_net:
+#     name: strapi_net

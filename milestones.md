@@ -1,7 +1,13 @@
-# Project Milestones
+# DevContainer Fix Milestones
 
-## 2025-04-02 Dependency Resolution
-1. [ ] Analyze and document npm installation errors
-2. [ ] Clean npm cache and node_modules
-3. [ ] Reinstall dependencies with proper Node.js version
-4. [ ] Verify successful installation
+1. [x] Examine current .devcontainer configuration
+2. [x] Identify issues in configuration
+3. [x] Apply fixes to .devcontainer setup:
+   - Fixed workspace folder path from `/app` to `/opt/app`
+   - Updated postCreateCommand paths
+   - Fixed database service name in docker-compose.yml
+   - Corrected volume paths in docker-compose.yml
+4. [x] Test configuration changes
+5. [x] Fix Docker network configuration issues:
+   - Resolve network "Strapi" project association
+   - Fix network label mismatch
