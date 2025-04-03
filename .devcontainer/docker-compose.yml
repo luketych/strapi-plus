@@ -7,7 +7,7 @@ services:
     command: sleep infinity
     env_file:
       - ../.env
-      - .env.devcontaine
+      - .env.devcontainer
     volumes:
       - type: bind
         source: ..
@@ -36,9 +36,6 @@ volumes:
   strapi-data:
 
 networks:
-  strapi_net:
-    external: true
-
-# networks:
-#   strapi_net:
-#     name: strapi_net
+  strapi:
+    name: strapi
+    driver: bridge

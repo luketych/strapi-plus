@@ -1,6 +1,6 @@
 {
   "name": "Strapi Dev Container",
-  "dockerComposeFile": "docker-compose.yml",
+  "dockerComposeFile": ["docker-compose.yml"],
   "service": "strapi",
   "workspaceFolder": "/opt/app",
   "containerEnv": {
@@ -8,8 +8,8 @@
   },
   "remoteEnv": {
     "DATABASE_CLIENT": "${localEnv:DATABASE_CLIENT}",
-    "DATABASE_HOST": "strapiDB",
-    "DATABASE_PORT": "${localEnv:DATABASE_PORT}",
+    "DATABASE_HOST": "strapiDB_devcontainer",
+    "DATABASE_PORT": "5433",
     "DATABASE_NAME": "${localEnv:DATABASE_NAME}",
     "DATABASE_USERNAME": "${localEnv:DATABASE_USERNAME}",
     "DATABASE_PASSWORD": "${localEnv:DATABASE_PASSWORD}",
@@ -33,7 +33,7 @@
       }
     }
   },
-  "forwardPorts": [1337, 5432],
+  "forwardPorts": [1337, 5433],
   "postCreateCommand": "find /opt/app -path /opt/app/.git -prune -o -path /opt/app/.cache -prune -o -path /opt/app/node_modules -prune -o -path /opt/app/build -prune -o -exec chown node:node {} \\; && npm install",
   "remoteUser": "node"
 }
