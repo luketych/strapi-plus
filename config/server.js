@@ -1,10 +1,12 @@
-module.exports = ({ env }) => ({
-  host: env('HOST', '0.0.0.0'),
-  port: env.int('PORT', 1337),
+const config = require('./index');
+
+module.exports = () => ({
+  host: config.server.host,
+  port: config.server.port,
   app: {
-    keys: env.array('APP_KEYS'),
+    keys: config.security.appKeys,
   },
   webhooks: {
-    populateRelations: env.bool('WEBHOOKS_POPULATE_RELATIONS', false),
+    populateRelations: false,
   },
 });

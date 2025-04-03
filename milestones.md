@@ -1,6 +1,8 @@
-# Milestones
+# Project Milestones
 
-## 2025-04-03 13:25
-- Fixed PostgreSQL connection configuration
-  - Added missing DATABASE_USERNAME environment variable
-  - Corrected DATABASE_HOST to match Docker service name
+## 2025-04-03 16:02
+- Security: Moved AWS credentials from default.js to environment variables
+- Configured AWS SDK to use environment-based configuration
+- Improved security by removing hardcoded credentials from version control
+- Added AWS_DEFAULT_REGION environment variable to ensure proper region configuration
+- Updated docker-compose.yml to pass AWS environment variables to Strapi container

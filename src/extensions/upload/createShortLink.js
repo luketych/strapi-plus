@@ -1,10 +1,10 @@
 'use strict';
 
-require('dotenv/config');
 const axios = require('axios');
+const config = require('../../../config');
 
-const KUTT_URL = process.env.KUTT_URL;
-const KUTT_X_API_KEY = process.env.KUTT_X_API_KEY;
+const KUTT_URL = config.services.kutt.url;
+const KUTT_X_API_KEY = config.services.kutt.apiKey;
 
 console.log('📦 Using link shortening service:', KUTT_URL);
 

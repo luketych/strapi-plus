@@ -1,15 +1,16 @@
-// ~/strapi-aws-s3/backend/config/plugins.js
-module.exports = ({ env }) => {
+const config = require('./index');
+
+module.exports = () => {
   const awsConfig = {
     s3Options: {
-      accessKeyId: env('AWS_ACCESS_KEY_ID'),
-      secretAccessKey: env('AWS_SECRET_ACCESS_KEY'),
-      region: env('AWS_REGION'),
+      accessKeyId: config.aws.accessKeyId,
+      secretAccessKey: config.aws.secretAccessKey,
+      region: config.aws.region,
     },
     params: {
       ACL: null, // or 'public-read' if needed
-      signedUrlExpires: env.int('AWS_SIGNED_URL_EXPIRES', 15 * 60),
-      Bucket: env('AWS_BUCKET'),
+      signedUrlExpires: config.aws.signedUrlExpires,
+      Bucket: config.aws.bucket,
     },
   };
 

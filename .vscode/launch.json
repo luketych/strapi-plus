@@ -21,7 +21,11 @@
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "console": "integratedTerminal"
+            "console": "integratedTerminal",
+            "env": {
+                "DATABASE_HOST": "localhost",
+                "NODE_ENV": "development"
+            }
         }
     ]
 }

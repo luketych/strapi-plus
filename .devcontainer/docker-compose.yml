@@ -1,0 +1,30 @@
+services:
+  strapi:
+    extends:
+      file: ../docker-compose.yml
+      service: strapi
+    volumes:
+      # Override the original node_modules mount
+      - strapi-node-modules:/opt/app/node_modules
+    command: sleep infinity # Override entry command to keep container running
+    environment:
+      NODE_ENV: development
+      DATABASE_HOST: strapiDB
+    networks:
+      - strapi
+
+  strapiDB:
+    extends:
+      file: ../docker-compose.yml
+      service: strapiDB
+    networks:
+      - strapi
+
+volumes:
+  strapi-node-modules:
+  strapi-data:
+
+networks:
+  strapi:
+    name: strapi
+    driver: bridge
