@@ -14,8 +14,6 @@ module.exports = () => {
     },
   };
 
-  console.log('\n📦 AWS S3 Upload Plugin Configuration:');
-  console.log(JSON.stringify({ ...awsConfig, s3Options: { ...awsConfig.s3Options, secretAccessKey: '***' } }, null, 2));
 
   return {
     upload: {
