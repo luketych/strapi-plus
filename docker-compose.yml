@@ -16,10 +16,11 @@ services:
     volumes:
       - ./config:/opt/app/config
       - ./src:/opt/app/src
-      - ./package.json:/opt/package.json
-      - ./yarn.lock:/opt/yarn.lock
       - ./public/uploads:/opt/app/public/uploads
-      - .:/opt/app
+      # Remove overlapping root volume mount
+      # Only mount specific development files
+      - ./package.json:/opt/app/package.json
+      - ./yarn.lock:/opt/app/yarn.lock
     ports:
       - "1337:1337"
     networks:
@@ -37,10 +38,8 @@ services:
       POSTGRES_PASSWORD: strapi
       POSTGRES_DB: strapi
     volumes:
-      - strapi-data:/var/lib/postgresql/data/ #using a volume
-      #- ./data:/var/lib/postgresql/data/ # if you want to use a bind folder
-      - ./init-db.sql:/docker-entrypoint-initdb.d/init-db.sql # For pink-box server issue. error: role "strapi" does not exist
-
+      - strapi-data:/var/lib/postgresql/data/
+      - ./infra_scripts/db/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
     ports:
       - "5432:5432"
     networks:
