@@ -14,13 +14,9 @@ services:
       AWS_BUCKET: ${AWS_BUCKET}
       AWS_SIGNED_URL_EXPIRES: ${AWS_SIGNED_URL_EXPIRES}
     volumes:
-      - ./config:/opt/app/config
-      - ./src:/opt/app/src
-      - ./public/uploads:/opt/app/public/uploads
-      # Remove overlapping root volume mount
-      # Only mount specific development files
-      - ./package.json:/opt/app/package.json
-      - ./yarn.lock:/opt/app/yarn.lock
+      - ./config:/srv/strapi/strapi-plus/config
+      - ./src:/srv/strapi/strapi-plus/src
+      - ./public/uploads:/srv/strapi/strapi-plus/public/uploads
     ports:
       - "1337:1337"
     networks:
