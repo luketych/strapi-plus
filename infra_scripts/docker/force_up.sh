@@ -27,13 +27,13 @@ COMPOSE_FILES=""
 
 case "$ENV" in
   local)
-    COMPOSE_FILES="-f docker-compose.db.yml -f docker-compose.yml -f docker-compose.override.yml"
+    COMPOSE_FILES="-f docker-compose.db.yml -f docker-compose.yml -f docker-compose.override.yml --profile local"
     ;;
   remote)
-    COMPOSE_FILES="-f docker-compose.db.remote.yml -f docker-compose.yml -f docker-compose.remote.yml"
+    COMPOSE_FILES="-f docker-compose.db.yml -f docker-compose.yml -f docker-compose.remote.yml --profile remote"
     ;;
   prod)
-    COMPOSE_FILES="-f docker-compose.db.prod.yml -f docker-compose.yml -f docker-compose.prod.yml"
+    COMPOSE_FILES="-f docker-compose.db.yml -f docker-compose.yml -f docker-compose.prod.yml --profile prod"
     ;;
 esac
 

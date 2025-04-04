@@ -1,5 +1,6 @@
 services:
   strapi:
+    profiles: ["remote"]
     environment:
       NODE_ENV: development
     volumes:

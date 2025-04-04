@@ -1,12 +1,15 @@
 services:
   strapi:
     container_name: strapi
-    build: .
+    profiles: ["local", "remote", "prod"]
+    build:
+      context: .
+      dockerfile: Dockerfile
     image: strapi-local:latest
     restart: unless-stopped
     environment:
       DATABASE_HOST: strapiDB
-      NODE_ENV: development
+      NODE_ENV: production
       AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
       AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
       AWS_REGION: ${AWS_REGION}
@@ -14,10 +17,6 @@ services:
       AWS_BUCKET: ${AWS_BUCKET}
       AWS_SIGNED_URL_EXPIRES: ${AWS_SIGNED_URL_EXPIRES}
     volumes:
-      - ./config:/opt/app/config
-      - ./src:/opt/app/src
-      - ./package.json:/opt/package.json
-      - ./yarn.lock:/opt/yarn.lock
       - ./public/uploads:/opt/app/public/uploads
     ports:
       - "1337:1337"

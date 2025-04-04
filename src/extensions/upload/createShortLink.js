@@ -23,7 +23,7 @@ async function createShortLink(originalURL) {
       }
     );
 
-    console.log('Short link created:', originalURL, response.data.shortURL);
+    console.log('Short link created:', originalURL, response.data.link);
     return response.data;
   } catch (err) {
     console.error('❌ Error creating short link:', err.response?.data || err.message);

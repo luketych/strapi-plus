@@ -1,10 +1,13 @@
 services:
   strapi:
+    profiles: ["local"]
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: strapi-local:latest
     environment:
       NODE_ENV: development
+    command: npm run strapi:develop
     volumes:
       - ./config:/opt/app/config
-      # - ./src:/opt/app/src
-      # - ./package.json:/opt/package.json
       - ./public/uploads:/opt/app/public/uploads
-    command: npm run strapi:develop
