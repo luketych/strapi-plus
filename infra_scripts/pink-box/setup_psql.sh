@@ -1,8 +1,9 @@
 #!/bin/bash
-# init_postgres.sh
-# This script checks if the PostgreSQL 15 data directory is empty.
-# If it's not empty, it will prompt you to either wipe and reinitialize the database
-# or just start the PostgreSQL service using the existing data.
+# infra_scripts/pink-box/setup_psql.sh
+# This script checks if the PostgreSQL 15 data directory exists and is empty.
+# If it doesn’t exist, it will warn you, create it, and continue.
+# It will then prompt you to either wipe the data directory and reinitialize the database
+# or simply start the PostgreSQL service using the existing data.
 #
 # Note: Running this script with the wipe option will delete any existing data.
 # Run as a user with sudo privileges.
@@ -20,8 +21,8 @@ start_pg() {
 
 # Check if the data directory exists
 if [ ! -d "$DATA_DIR" ]; then
-    echo "Data directory $DATA_DIR does not exist. Exiting."
-    exit 1
+    echo "Warning: Data directory $DATA_DIR does not exist. Creating it..."
+    sudo mkdir -p "$DATA_DIR"
 fi
 
 # Check if the data directory is empty
