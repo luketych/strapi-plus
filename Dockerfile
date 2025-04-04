@@ -19,15 +19,18 @@ RUN apk update && apk add --no-cache \
 
 WORKDIR /opt/app
 
-# Copy package.json and lock file for caching
-COPY package*.json ./
 
-# Configure npm
+
+
+COPY package.json ./
+
 RUN npm config set fetch-retry-maxtimeout 600000 -g && \
-    npm install -g node-gyp
+    npm install -g node-gyp && \
+    npm install --platform=linuxmusl --arch=x64
 
-# Install dependencies with sharp support
-RUN npm ci --platform=linuxmusl --arch=x64
+
+  
+
 
 # Copy full app
 COPY . .
