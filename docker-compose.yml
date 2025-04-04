@@ -19,6 +19,7 @@ services:
       - ./package.json:/opt/package.json
       - ./yarn.lock:/opt/yarn.lock
       - ./public/uploads:/opt/app/public/uploads
+      - .:/opt/app
     ports:
       - "1337:1337"
     networks:
@@ -38,6 +39,7 @@ services:
     volumes:
       - strapi-data:/var/lib/postgresql/data/ #using a volume
       #- ./data:/var/lib/postgresql/data/ # if you want to use a bind folder
+      - ./init-db.sql:/docker-entrypoint-initdb.d/init-db.sql # For pink-box server issue. error: role "strapi" does not exist
 
     ports:
       - "5432:5432"

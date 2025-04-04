@@ -6,6 +6,7 @@ services:
     volumes:
       # Override the original node_modules mount
       - strapi-node-modules:/opt/app/node_modules
+      - .:/opt/app
     command: sleep infinity # Override entry command to keep container running
     environment:
       NODE_ENV: development
