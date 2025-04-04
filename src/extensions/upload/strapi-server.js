@@ -7,12 +7,21 @@
  * It also creates a short URL for each uploaded file using the Short.io service.
  */
 
+
+const config = require('../../../config');
+
+const awsConfig = config.aws
+
+
 // Import the createShortLink function from the shortio_script.js file
 const { createShortLink } = require('./createShortLink.js');
 
 module.exports = (plugin) => {
   console.log('🔌 Initializing custom upload plugin extension');
-  
+
+  console.log('\n📦 AWS S3 Upload Plugin Configuration:');
+  console.log(JSON.stringify({ ...awsConfig, s3Options: { ...awsConfig.s3Options, secretAccessKey: '***' } }, null, 2));
+
   // Register a lifecycle hook for the file model
   strapi.db.lifecycles.subscribe({
     models: ['plugin::upload.file'],
