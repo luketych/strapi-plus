@@ -1,10 +1,45 @@
 #!/bin/bash
 
-# Names used in docker-compose.yml
+set -e
+
+# Usage message
+usage() {
+  echo "Usage: $0 [local|remote|prod]"
+  exit 1
+}
+
+# Validate input
+ENV="$1"
+if [[ -z "$ENV" ]]; then
+  echo "❌ Error: No environment specified."
+  usage
+fi
+
+if [[ "$ENV" != "local" && "$ENV" != "remote" && "$ENV" != "prod" ]]; then
+  echo "❌ Error: Invalid environment '$ENV'"
+  usage
+fi
+
+# Base Compose files including environment-specific DB config
+COMPOSE_FILES=""
+
+case "$ENV" in
+  local)
+    COMPOSE_FILES="-f docker-compose.db.yml -f docker-compose.yml -f docker-compose.override.yml"
+    ;;
+  remote)
+    COMPOSE_FILES="-f docker-compose.db.remote.yml -f docker-compose.yml -f docker-compose.remote.yml"
+    ;;
+  prod)
+    COMPOSE_FILES="-f docker-compose.db.prod.yml -f docker-compose.yml -f docker-compose.prod.yml"
+    ;;
+esac
+
+# Names used in docker-compose
 CONTAINER_NAMES=("strapi" "strapiDB")
 NETWORK_NAME="strapi"
 
-echo "🔧 Force-starting Docker: resolving conflicts and running docker compose up..."
+echo "🔧 Force-starting Docker for '$ENV' environment..."
 
 # Remove conflicting containers
 for CONTAINER_NAME in "${CONTAINER_NAMES[@]}"; do
@@ -21,5 +56,5 @@ if docker network ls --format '{{.Name}}' | grep -q "^${NETWORK_NAME}$"; then
   docker network rm "$NETWORK_NAME"
 fi
 
-echo "🚀 Running docker compose up..."
-docker compose up
+echo "🚀 Running docker compose for '$ENV'..."
+docker compose $COMPOSE_FILES up

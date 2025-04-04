@@ -9,9 +9,18 @@
     "db:reset": "npm run db:teardown -- -y && npm run db:setup -- -y",
 
 
-    "docker:check": "./infra_scripts/docker/check_conflicts.sh",
-    "docker:up": "./infra_scripts/docker/check_conflicts.sh && docker compose up",
-    "docker:forceUp": "./infra_scripts/docker/force_up.sh",
+    "docker:check": "bash ./infra_scripts/docker/check_conflicts.sh",
+    
+
+    "docker:up:local": "bash ./infra_scripts/docker/check_conflicts.sh && docker compose -f docker-compose.db.yml -f docker-compose.yml -f docker-compose.override.yml up",
+    "docker:up:remote": "bash ./infra_scripts/docker/check_conflicts.sh && docker compose -f docker-compose.db.yml -f docker-compose.yml -f docker-compose.remote.yml up",
+    "docker:up:prod": "bash ./infra_scripts/docker/check_conflicts.sh && docker compose -f docker-compose.db.yml -f docker-compose.yml -f docker-compose.prod.yml up --build",
+
+
+    "docker:forceUp": "bash ./infra_scripts/docker/force_up.sh",
+    "docker:forceUp:local": "npm run docker:forceUp -- local",
+    "docker:forceUp:remote": "npm run docker:forceUp -- remote",
+    "docker:forceUp:prod": "npm run docker:forceUp -- prod",
 
 
     "strapi:build": "strapi build",

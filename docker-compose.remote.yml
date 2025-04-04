@@ -1,0 +1,12 @@
+services:
+  strapi:
+    environment:
+      NODE_ENV: development
+    volumes:
+      - strapi_uploads:/opt/app/public/uploads
+    command: npm run strapi:develop
+    build:
+      context: .
+
+volumes:
+  strapi_uploads:

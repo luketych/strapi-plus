@@ -1,0 +1,25 @@
+services:
+  strapi:
+    environment:
+      NODE_ENV: production
+    command: npm run strapi:start
+    volumes:
+      - strapi_uploads:/opt/app/public/uploads
+    build:
+      context: .
+    restart: always
+
+  strapiDB:
+    image: postgres:12.0-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: strapi
+      POSTGRES_PASSWORD: strapi
+      POSTGRES_DB: strapi
+    volumes:
+      - strapi-pg_data:/var/lib/postgresql/data/
+    ports:
+      - "5432:5432"
+
+volumes:
+  strapi-pg_data:
