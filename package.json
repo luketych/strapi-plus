@@ -33,10 +33,9 @@
     "strapi:upgrade": "npx @strapi/upgrade latest",
     "strapi:upgrade:dry": "npx @strapi/upgrade latest --dry",
 
-    "strapi:upgrade:luke": "npm install @strapi/strapi@latest @strapi/plugin-cloud@latest @strapi/plugin-users-permissions@latest && npm run build"
+    "strapi:upgrade:luke": "npm install @strapi/strapi@latest @strapi/plugin-users-permissions@latest && npm run strapi:build"
   },
   "dependencies": {
-    "@strapi/plugin-cloud": "5.11.3",
     "@strapi/plugin-users-permissions": "5.11.3",
     "@strapi/provider-upload-aws-s3": "^5.11.3",
     "@strapi/strapi": "^5.11.3",

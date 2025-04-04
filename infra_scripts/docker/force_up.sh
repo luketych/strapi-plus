@@ -12,6 +12,8 @@ usage() {
 ENV="$1"
 if [[ -z "$ENV" ]]; then
   echo "❌ Error: No environment specified."
+  echo "Please provide an environment: local, remote, or prod."
+  echo "If you are running a package.json script, use 'npm run force-up:local|remote|prod'."
   usage
 fi
 
