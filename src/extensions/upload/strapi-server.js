@@ -32,9 +32,9 @@ module.exports = (plugin) => {
           console.log('📁 Detected new file upload:', result.url);
           try {
             const shortLinkData = await createShortLink(result.url);
-            if (shortLinkData && shortLinkData.shortURL) {
-              result.shortUrl = shortLinkData.shortURL;
-              console.log('✅ Short link created:', shortLinkData.shortURL);
+            if (shortLinkData) {
+              result.shortUrl = shortLinkData.link;
+              console.log('✅ Short link created:', shortLinkData.link);
             }
           } catch (error) {
             console.error('❌ Error creating short link:', error);

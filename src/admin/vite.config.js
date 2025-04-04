@@ -14,5 +14,8 @@ module.exports = (config) => {
     server: {
       allowedHosts,
     },
+    optimizeDeps: {
+      exclude: ['Layout-CVUWh8zf']
+    },
   });
 };

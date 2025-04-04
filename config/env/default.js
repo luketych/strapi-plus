@@ -32,8 +32,8 @@ module.exports = {
 
   services: {
     kutt: {
-      url: 'https://kutt.it',
-      apiKey: 'test_api_key',
+      url: 'https://ktrx.cards',
+      apiKey: 'qAFKGfvvT3juLKV0jbuUP5CumHlQpm_IYtpATcXo',
     }
   },
 
