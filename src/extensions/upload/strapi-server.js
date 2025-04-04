@@ -17,10 +17,11 @@ const awsConfig = config.aws
 const { createShortLink } = require('./createShortLink.js');
 
 module.exports = (plugin) => {
-  console.log('🔌 Initializing custom upload plugin extension');
 
-  console.log('\n📦 AWS S3 Upload Plugin Configuration:');
-  console.log(JSON.stringify({ ...awsConfig, s3Options: { ...awsConfig.s3Options, secretAccessKey: '***' } }, null, 2));
+  strapi.log.info('🔌 Initializing custom upload plugin extension');
+
+  strapi.log.info('📦 AWS S3 Upload Plugin Configuration:');
+  strapi.log.info(JSON.stringify({ ...awsConfig, s3Options: { ...awsConfig.s3Options, secretAccessKey: '***' } }, null, 2));
 
   // Register a lifecycle hook for the file model
   strapi.db.lifecycles.subscribe({
@@ -29,24 +30,24 @@ module.exports = (plugin) => {
     // This hook runs after a file is created
     async afterCreate(event) {
       const { result } = event;
-      console.log('🔄 Lifecycle hook: afterCreate');
+      strapi.log.info('🔄 Lifecycle hook: afterCreate');
       
       // Add hello:world to the response
       if (result && typeof result === 'object') {
         result.hello = 'world';
-        console.log('✅ Added hello:world to file:', result.id);
+        strapi.log.info('✅ Added hello:world to file:', result.id);
         
         // Create a short URL for the file
         if (result.url) {
-          console.log('📁 Detected new file upload:', result.url);
+          strapi.log.info('📁 Detected new file upload:', result.url);
           try {
             const shortLinkData = await createShortLink(result.url);
             if (shortLinkData && shortLinkData.shortURL) {
               result.shortUrl = shortLinkData.shortURL;
-              console.log('✅ Short link created:', shortLinkData.shortURL);
+              strapi.log.info('✅ Short link created:', shortLinkData.shortURL);
             }
           } catch (error) {
-            console.error('❌ Error creating short link:', error);
+            strapi.log.error('❌ Error creating short link:', error);
           }
         }
       }
@@ -55,7 +56,7 @@ module.exports = (plugin) => {
     // This hook runs after files are found
     afterFindMany(event) {
       const { result } = event;
-      console.log('🔄 Lifecycle hook: afterFindMany');
+      strapi.log.info('🔄 Lifecycle hook: afterFindMany');
       
       // Add hello:world to each file in the response
       if (Array.isArray(result)) {
@@ -64,31 +65,31 @@ module.exports = (plugin) => {
             file.hello = 'world';
           }
         });
-        console.log('✅ Added hello:world to', result.length, 'files');
+        strapi.log.info('✅ Added hello:world to', result.length, 'files');
       }
     },
     
     // This hook runs after a file is found
     afterFindOne(event) {
       const { result } = event;
-      console.log('🔄 Lifecycle hook: afterFindOne');
+      strapi.log.info('🔄 Lifecycle hook: afterFindOne');
       
       // Add hello:world to the response
       if (result && typeof result === 'object') {
         result.hello = 'world';
-        console.log('✅ Added hello:world to file:', result.id);
+        strapi.log.info('✅ Added hello:world to file:', result.id);
       }
     },
     
     // This hook runs after a file is updated
     afterUpdate(event) {
       const { result } = event;
-      console.log('🔄 Lifecycle hook: afterUpdate');
+      strapi.log.info('🔄 Lifecycle hook: afterUpdate');
       
       // Add hello:world to the response
       if (result && typeof result === 'object') {
         result.hello = 'world';
-        console.log('✅ Added hello:world to file:', result.id);
+        strapi.log.info('✅ Added hello:world to file:', result.id);
       }
     }
   });

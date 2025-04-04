@@ -1,6 +1,7 @@
 services:
   strapiDB:
     container_name: strapiDB
+    profiles: ["local", "remote", "prod"]
     platform: linux/amd64 #for platform error on Apple M1 chips
     restart: unless-stopped
     image: postgres:12.0-alpine
@@ -10,7 +11,6 @@ services:
       POSTGRES_DB: strapi
     volumes:
       - strapi-pg_data:/var/lib/postgresql/data/ #using a volume
-
     ports:
       - "5432:5432"
     networks:

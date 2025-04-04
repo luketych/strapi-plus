@@ -15,7 +15,7 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "Start Development Server",
+            "name": "Dev Server",
             "runtimeExecutable": "npm",
             "runtimeArgs": ["run", "strapi:develop"],
             "skipFiles": [
@@ -26,6 +26,32 @@
                 "DATABASE_HOST": "localhost",
                 "NODE_ENV": "development"
             }
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Dev Server w Tee Log",
+            "runtimeExecutable": "npm",
+            "runtimeArgs": ["run", "strapi:develop:log"],
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "console": "integratedTerminal",
+            "env": {
+                "DATABASE_HOST": "localhost",
+                "NODE_ENV": "development"
+            }
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Start Docker Local",
+            "runtimeExecutable": "npm",
+            "runtimeArgs": ["run", "docker:up:local"],
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "console": "integratedTerminal"
         }
     ]
 }
