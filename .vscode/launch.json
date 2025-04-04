@@ -17,7 +17,7 @@
             "request": "launch",
             "name": "Start Development Server",
             "runtimeExecutable": "npm",
-            "runtimeArgs": ["run", "develop"],
+            "runtimeArgs": ["run", "strapi:develop"],
             "skipFiles": [
                 "<node_internals>/**"
             ],

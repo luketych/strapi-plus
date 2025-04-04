@@ -7,22 +7,14 @@
     "db:teardown": "./infra_scripts/db/teardown.sh",
     "db:setup": "./infra_scripts/db/setup.sh",
     "db:reset": "npm run db:teardown -- -y && npm run db:setup -- -y",
-
-
     "docker:check": "bash ./infra_scripts/docker/check_conflicts.sh",
-    
-
     "docker:up:local": "bash ./infra_scripts/docker/check_conflicts.sh && docker compose -f docker-compose.db.yml -f docker-compose.yml -f docker-compose.override.yml up",
     "docker:up:remote": "bash ./infra_scripts/docker/check_conflicts.sh && docker compose -f docker-compose.db.yml -f docker-compose.yml -f docker-compose.remote.yml up",
     "docker:up:prod": "bash ./infra_scripts/docker/check_conflicts.sh && docker compose -f docker-compose.db.yml -f docker-compose.yml -f docker-compose.prod.yml up --build",
-
-
     "docker:forceUp": "bash ./infra_scripts/docker/force_up.sh",
     "docker:forceUp:local": "npm run docker:forceUp -- local",
     "docker:forceUp:remote": "npm run docker:forceUp -- remote",
     "docker:forceUp:prod": "npm run docker:forceUp -- prod",
-
-
     "strapi:build": "strapi build",
     "strapi:console": "strapi console",
     "strapi:deploy": "strapi deploy",
@@ -32,7 +24,6 @@
     "strapi:strapi": "strapi",
     "strapi:upgrade": "npx @strapi/upgrade latest",
     "strapi:upgrade:dry": "npx @strapi/upgrade latest --dry",
-
     "strapi:upgrade:luke": "npm install @strapi/strapi@latest @strapi/plugin-users-permissions@latest && npm run strapi:build"
   },
   "dependencies": {
@@ -45,7 +36,8 @@
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-router-dom": "^6.0.0",
-    "styled-components": "^6.0.0"
+    "styled-components": "^6.0.0",
+    "vite": "^5.4.15"
   },
   "engines": {
     "node": ">=18.0.0 <=22.x.x",
