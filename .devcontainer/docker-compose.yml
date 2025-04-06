@@ -9,7 +9,7 @@ services:
     command: sleep infinity # Override entry command to keep container running
     environment:
       NODE_ENV: development
-      DATABASE_HOST: strapiDB
+      DATABASE_HOST: strapiDB-service
     networks:
       - strapi
 
