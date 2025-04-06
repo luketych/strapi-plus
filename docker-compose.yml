@@ -1,6 +1,6 @@
 services:
-  strapi:
-    container_name: strapi
+  strapi-service:
+    container_name: strapi-container
     build:
       context: .
       dockerfile: Dockerfile
@@ -11,9 +11,9 @@ services:
     ports:
       - "1337:1337"
     networks:
-      - strapi
+      - strapi-network
     depends_on:
-      - strapiDB
+      - strapiDB-service
     environment:
       DATABASE_HOST: strapiDB
       AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
@@ -24,9 +24,9 @@ services:
       AWS_SIGNED_URL_EXPIRES: ${AWS_SIGNED_URL_EXPIRES}
 
   ### LOCAL PROFILE ###
-  strapi-local:
+  strapi-local-service:
     extends:
-      service: strapi
+      service: strapi-service
     profiles: ["local"]
     command: npm run strapi:develop
     environment:
@@ -36,33 +36,33 @@ services:
       - ./public/uploads:/opt/app/public/uploads
 
   ### REMOTE PROFILE ###
-  strapi-remote:
+  strapi-remote-service:
     extends:
-      service: strapi
+      service: strapi-service
     profiles: ["remote"]
     command: npm run strapi:develop
     environment:
       NODE_ENV: development
     volumes:
-      - strapi_uploads:/opt/app/public/uploads
+      - strapi-volume-uploads:/opt/app/public/uploads
 
   ### PROD PROFILE ###
-  strapi-prod:
+  strapi-prod-service:
     extends:
-      service: strapi
+      service: strapi-service
     profiles: ["prod"]
     command: npm run strapi:start
     environment:
       NODE_ENV: production
     volumes:
-      - strapi_uploads:/opt/app/public/uploads
+      - strapi-volume-uploads:/opt/app/public/uploads
 
 volumes:
-  strapi-pg_data:
-  strapi_uploads:
+  strapi-volume-pg_data:
+  strapi-volume-uploads:
 
 networks:
-  strapi:
-    name: strapi
+  strapi-network:
+    name: strapi-network
     driver: bridge
 
