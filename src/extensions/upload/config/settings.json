@@ -1,0 +1,6 @@
+{
+  "provider": "your-custom-provider",
+  "providerOptions": {
+    // ... your provider-specific options
+  }
+}
