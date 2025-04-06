@@ -1,6 +1,5 @@
 services:
   strapi-service:
-    container_name: strapi-container
     build:
       context: .
       dockerfile: Dockerfile
