@@ -19,6 +19,6 @@ volumes:
   strapi-volume-pg_data:
 
 networks:
-  strapi:
+  strapi-network:
     name: strapi-network
     driver: bridge
