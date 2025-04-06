@@ -1,21 +1,11 @@
 services:
   strapi:
     container_name: strapi
-    profiles: ["local", "remote", "prod"]
     build:
       context: .
       dockerfile: Dockerfile
     image: strapi-local:latest
     restart: unless-stopped
-    environment:
-      DATABASE_HOST: strapiDB
-      NODE_ENV: production
-      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
-      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
-      AWS_REGION: ${AWS_REGION}
-      AWS_DEFAULT_REGION: ${AWS_DEFAULT_REGION}
-      AWS_BUCKET: ${AWS_BUCKET}
-      AWS_SIGNED_URL_EXPIRES: ${AWS_SIGNED_URL_EXPIRES}
     volumes:
       - ./public/uploads:/opt/app/public/uploads
     ports:
@@ -24,11 +14,55 @@ services:
       - strapi
     depends_on:
       - strapiDB
+    environment:
+      DATABASE_HOST: strapiDB
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      AWS_REGION: ${AWS_REGION}
+      AWS_DEFAULT_REGION: ${AWS_DEFAULT_REGION}
+      AWS_BUCKET: ${AWS_BUCKET}
+      AWS_SIGNED_URL_EXPIRES: ${AWS_SIGNED_URL_EXPIRES}
+
+  ### LOCAL PROFILE ###
+  strapi-local:
+    extends:
+      service: strapi
+    profiles: ["local"]
+    command: npm run strapi:develop
+    environment:
+      NODE_ENV: development
+    volumes:
+      - ./config:/opt/app/config
+      - ./public/uploads:/opt/app/public/uploads
+
+  ### REMOTE PROFILE ###
+  strapi-remote:
+    extends:
+      service: strapi
+    profiles: ["remote"]
+    command: npm run strapi:develop
+    environment:
+      NODE_ENV: development
+    volumes:
+      - strapi_uploads:/opt/app/public/uploads
+
+  ### PROD PROFILE ###
+  strapi-prod:
+    extends:
+      service: strapi
+    profiles: ["prod"]
+    command: npm run strapi:start
+    environment:
+      NODE_ENV: production
+    volumes:
+      - strapi_uploads:/opt/app/public/uploads
 
 volumes:
   strapi-pg_data:
+  strapi_uploads:
 
 networks:
   strapi:
     name: strapi
     driver: bridge
+
