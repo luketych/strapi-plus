@@ -38,8 +38,8 @@ module.exports = (config, { strapi }) => {
           
           strapi.log.info('🔑 Token validated', {
             userId: decoded.id,
-            issueDate: new Date(decoded.iat * 1000).toISOString(),
-            expiryDate: decoded.exp ? new Date(decoded.exp * 1000).toISOString() : 'No expiry'
+            issueDate: (typeof decoded.iat === 'number' && !isNaN(decoded.iat)) ? new Date(decoded.iat * 1000).toISOString() : 'Invalid issue date',
+            expiryDate: (decoded.exp && typeof decoded.exp === 'number' && !isNaN(decoded.exp)) ? new Date(decoded.exp * 1000).toISOString() : 'No expiry'
           });
 
           // Check user permissions

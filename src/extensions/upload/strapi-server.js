@@ -35,11 +35,8 @@ module.exports = (plugin) => {
       const { result } = event;
       strapi.log.info('🔄 Lifecycle hook: afterCreate');
       
-      // Add hello:world to the response
-      if (result && typeof result === 'object') {
-        result.hello = 'world';
-        strapi.log.info('✅ Added hello:world to file:', result.id);
-        
+
+      if (result && typeof result === 'object') {        
         // Create a short URL for the file
         if (result.url) {
           strapi.log.info('📁 Detected new file upload:', result.url);
@@ -60,40 +57,18 @@ module.exports = (plugin) => {
     afterFindMany(event) {
       const { result } = event;
       strapi.log.info('🔄 Lifecycle hook: afterFindMany');
-      
-      // Add hello:world to each file in the response
-      if (Array.isArray(result)) {
-        result.forEach(file => {
-          if (file && typeof file === 'object') {
-            file.hello = 'world';
-          }
-        });
-        strapi.log.info('✅ Added hello:world to', result.length, 'files');
-      }
     },
     
     // This hook runs after a file is found
     afterFindOne(event) {
       const { result } = event;
       strapi.log.info('🔄 Lifecycle hook: afterFindOne');
-      
-      // Add hello:world to the response
-      if (result && typeof result === 'object') {
-        result.hello = 'world';
-        strapi.log.info('✅ Added hello:world to file:', result.id);
-      }
     },
     
     // This hook runs after a file is updated
     afterUpdate(event) {
       const { result } = event;
       strapi.log.info('🔄 Lifecycle hook: afterUpdate');
-      
-      // Add hello:world to the response
-      if (result && typeof result === 'object') {
-        result.hello = 'world';
-        strapi.log.info('✅ Added hello:world to file:', result.id);
-      }
     }
   });
   
