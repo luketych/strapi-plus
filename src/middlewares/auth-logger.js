@@ -31,15 +31,55 @@ module.exports = (config, { strapi }) => {
           });
         }
       } else {
+        // Extract token value
+        const tokenValue = token.replace('Bearer ', '');
+        
         try {
+          // Debug log token details
+          strapi.log.debug({ token: tokenValue }, 'Attempting token verification');
+
           // Attempt to decode the token
-          const tokenValue = token.replace('Bearer ', '');
           const decoded = strapi.plugins['users-permissions'].services.jwt.verify(tokenValue);
-          
+
+          // Debug log decoded token timestamps
+          strapi.log.debug({
+            iat: typeof decoded.iat,
+            value: decoded.iat,
+            exp: typeof decoded.exp,
+            expValue: decoded.exp
+          }, 'Token timestamp values');
+
+          // Validate timestamps before using them
+          let issueDate = 'Invalid issue date';
+          let expiryDate = 'No expiry';
+
+          if (typeof decoded.iat === 'number' && !isNaN(decoded.iat)) {
+            try {
+              issueDate = new Date(decoded.iat * 1000).toISOString();
+            } catch (dateError) {
+              strapi.log.error('❌ Invalid issue date in token', {
+                iat: decoded.iat,
+                error: dateError.message
+              });
+            }
+          }
+
+          if (decoded.exp && typeof decoded.exp === 'number' && !isNaN(decoded.exp)) {
+            try {
+              expiryDate = new Date(decoded.exp * 1000).toISOString();
+            } catch (dateError) {
+              strapi.log.error('❌ Invalid expiry date in token', {
+                exp: decoded.exp,
+                error: dateError.message
+              });
+            }
+          }
+
           strapi.log.info('🔑 Token validated', {
             userId: decoded.id,
-            issueDate: (typeof decoded.iat === 'number' && !isNaN(decoded.iat)) ? new Date(decoded.iat * 1000).toISOString() : 'Invalid issue date',
-            expiryDate: (decoded.exp && typeof decoded.exp === 'number' && !isNaN(decoded.exp)) ? new Date(decoded.exp * 1000).toISOString() : 'No expiry'
+            issueDate,
+            expiryDate,
+            tokenValue // Include token value in successful validation logs
           });
 
           // Check user permissions
@@ -66,23 +106,51 @@ module.exports = (config, { strapi }) => {
             });
           }
         } catch (error) {
+          // Log detailed token validation errors
           if (error.name === 'JsonWebTokenError') {
             strapi.log.error('❌ Invalid token provided', { 
               error: error.message,
+              errorType: error.name,
+              path: ctx.path,
+              token: tokenValue,
+              stack: error.stack
+            });
+
+            // Attempt token recovery - currently just logs the attempt
+            strapi.log.info('🔄 Attempting token recovery', {
+              strategy: 'invalidate_and_require_reauth',
               path: ctx.path
             });
           } else if (error.name === 'TokenExpiredError') {
             strapi.log.error('❌ Token expired', {
               expiredAt: error.expiredAt.toISOString(),
-              path: ctx.path
+              path: ctx.path,
+              token: tokenValue
+            });
+
+            // Log expiry details for debugging
+            strapi.log.debug('Token expiry details', {
+              currentTime: new Date().toISOString(),
+              tokenExpiry: error.expiredAt.toISOString(),
+              timeDiff: Math.floor((Date.now() - error.expiredAt) / 1000) + ' seconds'
             });
           } else {
             strapi.log.error('❌ Error processing auth token', {
               error: error.message,
+              errorType: error.name,
               stack: error.stack,
-              path: ctx.path
+              path: ctx.path,
+              token: tokenValue,
+              timestamp: new Date().toISOString()
             });
           }
+
+          // Return appropriate status for token errors
+          ctx.status = error.name === 'TokenExpiredError' ? 401 : 403;
+          ctx.body = {
+            error: 'Token validation failed',
+            message: error.name === 'TokenExpiredError' ? 'Token has expired' : 'Invalid token'
+          };
         }
       }
     }
@@ -91,13 +159,13 @@ module.exports = (config, { strapi }) => {
       await next();
     } catch (error) {
       // Log authentication and permission errors
-      if (error.status === 401) {
+      if (error.name === 'UnauthorizedError') {
         strapi.log.error('🚫 Unauthorized access attempt', {
           path: ctx.path,
           method: ctx.method,
           error: error.message
         });
-      } else if (error.status === 403) {
+      } else if (error.name === 'ForbiddenError') {
         strapi.log.error('🚫 Forbidden access attempt', {
           path: ctx.path,
           method: ctx.method,
