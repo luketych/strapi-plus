@@ -7,8 +7,6 @@ services:
     restart: unless-stopped
     volumes:
       - ./public/uploads:/opt/app/public/uploads
-    ports:
-      - "1337:1337"
     networks:
       - strapi-network
     depends_on:
@@ -30,6 +28,8 @@ services:
     command: npm run strapi:develop
     environment:
       NODE_ENV: development
+    ports:
+      - "1337:1337"
     volumes:
       - ./config:/opt/app/config
       - ./public/uploads:/opt/app/public/uploads
@@ -42,6 +42,8 @@ services:
     command: npm run strapi:develop
     environment:
       NODE_ENV: development
+    ports:
+      - "1337:1337"
     volumes:
       - strapi-volume-uploads:/opt/app/public/uploads
 
@@ -53,6 +55,8 @@ services:
     command: npm run strapi:start
     environment:
       NODE_ENV: production
+    ports:
+      - "1337:1337"
     volumes:
       - strapi-volume-uploads:/opt/app/public/uploads
 
