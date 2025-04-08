@@ -18,9 +18,6 @@ const { createShortLink } = require('./createShortLink.js');
 
 module.exports = (plugin) => {
 
-
-
-
   strapi.log.info('🔌 Initializing custom upload plugin extension');
 
   strapi.log.info('📦 AWS S3 Upload Plugin Configuration:');

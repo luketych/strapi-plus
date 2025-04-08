@@ -7,6 +7,7 @@ module.exports = ({ env }) => ({
         secretAccessKey: env('AWS_ACCESS_SECRET'),
         region: env('AWS_REGION'),
         params: {
+          ACL: env('AWS_S3_ACL', null),
           Bucket: env('AWS_BUCKET'),
         },
       }
